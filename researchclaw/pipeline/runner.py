@@ -435,6 +435,7 @@ def execute_pipeline(
     config: RCConfig,
     adapters: AdapterBundle,
     from_stage: Stage = Stage.TOPIC_INIT,
+    to_stage: Stage | None = None,
     auto_approve_gates: bool = False,
     stop_on_gate: bool = False,
     skip_noncritical: bool = False,
@@ -474,6 +475,8 @@ def execute_pipeline(
         started = _should_start(stage, from_stage, started)
         if not started:
             continue
+        if to_stage is not None and int(stage) > int(to_stage):
+            break
 
         # ── Check for cancellation before each stage ──
         if cancel_event is not None and cancel_event.is_set():
