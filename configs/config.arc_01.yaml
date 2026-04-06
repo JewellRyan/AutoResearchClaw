@@ -1,0 +1,67 @@
+project:
+  name: "wangjiashan InSAR landslide"
+  mode: "full-auto"
+
+research:
+  topic: "wangjiashan InSAR landslide, sliding surface, 3D decomposition, sentinel-1 TerraSAR"
+  domains:
+    - "remote sensing"
+    - "InSAR"
+    - "engineering geology"
+    - "landslide monitoring"
+  daily_paper_count: 10
+  quality_threshold: 4.0
+
+runtime:
+  timezone: "America/New_York"
+  max_parallel_tasks: 3
+  approval_timeout_hours: 12
+  retry_limit: 2
+
+notifications:
+  channel: "console"
+  target: ""
+  on_stage_start: true
+  on_stage_fail: true
+  on_gate_required: true
+
+knowledge_base:
+  backend: "markdown"
+  root: "docs/kb"
+
+openclaw_bridge:
+  use_cron: false
+  use_message: false
+  use_memory: false
+  use_sessions_spawn: false
+  use_web_fetch: false
+  use_browser: false
+
+llm:
+  provider: "openai"
+  base_url: "https://api.openai.com/v1"
+  wire_api: "chat_completions"
+  api_key_env: "OPENAI_API_KEY"
+  api_key: ""
+  primary_model: "gpt-4o"
+  fallback_models:
+    - "gpt-4o-mini"
+
+security:
+  hitl_required_stages: [5, 9, 20]
+  allow_publish_without_approval: false
+  redact_sensitive_logs: true
+
+experiment:
+  mode: "sandbox"
+  time_budget_sec: 300
+  max_iterations: 10
+  metric_key: "primary_metric"
+  metric_direction: "minimize"
+  sandbox:
+    python_path: ".venv/Scripts/python.exe"
+    gpu_required: false
+    max_memory_mb: 4096
+
+prompts:
+  custom_file: ""
